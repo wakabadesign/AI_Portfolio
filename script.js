@@ -56,6 +56,9 @@ const observer = new IntersectionObserver(
   { threshold: 0.14 }
 );
 
-document.querySelectorAll(".reveal").forEach((element) => {
+const revealElements = document.querySelectorAll(".reveal");
+
+revealElements.forEach((element) => {
+  element.classList.add("is-pending");
   observer.observe(element);
 });

@@ -18,6 +18,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -126,7 +127,8 @@ h1,
 h2,
 h3,
 p {
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  line-break: strict;
 }
 
 h1,
@@ -137,9 +139,13 @@ h3 {
 }
 
 h1 {
-  max-width: 10.5em;
+  max-width: 12em;
   font-size: clamp(2.35rem, 6.3vw, 5.6rem);
   font-weight: 900;
+}
+
+h1 span {
+  display: block;
 }
 
 h2 {
@@ -219,12 +225,13 @@ h2 {
 }
 
 .wide-card {
-  grid-column: span 1;
+  grid-column: span 2;
 }
 
 .image-button {
   display: block;
   width: 100%;
+  aspect-ratio: 4 / 3;
   padding: 0;
   cursor: zoom-in;
   background: var(--beige);
@@ -235,18 +242,17 @@ h2 {
 .image-button img {
   width: 100%;
   height: 100%;
-  min-height: 390px;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  min-height: 0;
+  object-fit: contain;
   transition: transform 280ms ease;
 }
 
-.character-card .image-button img {
-  min-height: 430px;
+.character-card:not(.wide-card) .image-button {
+  aspect-ratio: 1 / 1;
 }
 
-.character-card:not(.wide-card) .image-button img {
-  aspect-ratio: 1 / 1;
+.character-card.wide-card .image-button {
+  aspect-ratio: 16 / 9;
 }
 
 .image-button:hover img {
@@ -332,8 +338,8 @@ h2 {
   color: var(--muted);
 }
 
-.image-only-card .image-button img {
-  min-height: 520px;
+.youtube-thumbnail-card .image-button {
+  aspect-ratio: 16 / 9;
 }
 
 .menu-grid {
@@ -362,7 +368,7 @@ h2 {
 
 .profile-layout {
   display: grid;
-  grid-template-columns: 178px minmax(0, 1fr) auto;
+  grid-template-columns: 178px minmax(0, 1fr);
   gap: clamp(1rem, 3vw, 2rem);
   align-items: center;
   padding: clamp(1rem, 3vw, 1.5rem);
@@ -402,24 +408,6 @@ h2 {
   margin: 0.35rem 0 0;
   color: var(--muted);
   font-size: 0.96rem;
-}
-
-.tool-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.55rem;
-  max-width: 230px;
-}
-
-.tool-list span {
-  padding: 0.55rem 0.8rem;
-  color: var(--rose-deep);
-  font-size: 0.86rem;
-  font-weight: 900;
-  background: rgba(239, 208, 215, 0.45);
-  border: 1px solid rgba(185, 111, 125, 0.18);
-  border-radius: 999px;
 }
 
 .contact-section {
@@ -495,12 +483,17 @@ h2 {
 }
 
 .reveal {
-  opacity: 0;
-  transform: translateY(24px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 620ms ease, transform 620ms ease;
 }
 
-.reveal.is-visible {
+.reveal.is-pending {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.reveal.is-pending.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -519,6 +512,14 @@ h2 {
     grid-row: auto;
   }
 
+  .wide-card {
+    grid-column: auto;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .profile-layout {
     grid-template-columns: 150px minmax(0, 1fr);
   }
@@ -527,11 +528,6 @@ h2 {
     width: 150px;
   }
 
-  .tool-list {
-    grid-column: 1 / -1;
-    justify-content: flex-start;
-    max-width: none;
-  }
 }
 
 @media (max-width: 700px) {
@@ -542,11 +538,14 @@ h2 {
   }
 
   .site-nav {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     width: 100%;
-    justify-content: space-between;
-    gap: 0.5rem;
-    overflow-x: auto;
+    gap: 0.35rem;
+    overflow: visible;
     padding-bottom: 0.1rem;
+    font-size: 0.78rem;
+    text-align: center;
   }
 
   .hero {
@@ -572,17 +571,12 @@ h2 {
   }
 
   h1 {
-    font-size: clamp(2.2rem, 12.8vw, 3.4rem);
+    max-width: none;
+    font-size: clamp(1.9rem, 9.5vw, 2.8rem);
   }
 
   h2 {
     font-size: clamp(1.85rem, 9vw, 2.65rem);
-  }
-
-  .image-button img,
-  .character-card .image-button img,
-  .image-only-card .image-button img {
-    min-height: auto;
   }
 
   .card-body {
