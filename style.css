@@ -77,7 +77,6 @@ main {
   position: relative;
   min-height: calc(100svh - 3.7rem);
   display: grid;
-  place-items: center;
   isolation: isolate;
   overflow: hidden;
 }
@@ -89,6 +88,8 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: brightness(1.06) saturate(0.84) contrast(0.9);
+  transform: scale(1.01);
 }
 
 .hero-overlay {
@@ -96,8 +97,9 @@ main {
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(90deg, rgba(255, 253, 251, 0.92) 0%, rgba(255, 253, 251, 0.76) 48%, rgba(255, 253, 251, 0.42) 100%),
-    rgba(255, 255, 255, 0.2);
+    radial-gradient(circle at 50% 53%, rgba(255, 253, 251, 0.26) 0%, rgba(255, 253, 251, 0.12) 15%, transparent 31%),
+    linear-gradient(180deg, rgba(255, 253, 251, 0.78) 0%, rgba(255, 253, 251, 0.22) 30%, rgba(255, 253, 251, 0.04) 58%, rgba(255, 253, 251, 0.8) 100%),
+    linear-gradient(90deg, rgba(255, 253, 251, 0.42) 0%, transparent 42%, transparent 100%);
 }
 
 .hero-copy,
@@ -111,7 +113,20 @@ main {
 }
 
 .hero-copy {
-  padding: clamp(4rem, 10vw, 8rem) 0;
+  min-height: calc(100svh - 3.7rem);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(2rem, 5vh, 3.8rem) 0 clamp(2rem, 5vh, 3.5rem);
+}
+
+.hero-title {
+  grid-row: 1;
+  max-width: min(48rem, 68vw);
+}
+
+.hero-footer {
+  grid-row: 3;
+  max-width: none;
 }
 
 .eyebrow {
@@ -139,13 +154,19 @@ h3 {
 }
 
 h1 {
-  max-width: 12em;
-  font-size: clamp(2.35rem, 6.3vw, 5.6rem);
-  font-weight: 900;
+  max-width: 12.5em;
+  color: #433831;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", "Yu Gothic", serif;
+  font-size: clamp(2.25rem, 5vw, 4.8rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.025em;
+  text-shadow: 0 2px 18px rgba(255, 253, 251, 0.9);
 }
 
 h1 span {
   display: block;
+  white-space: nowrap;
 }
 
 h2 {
@@ -153,11 +174,17 @@ h2 {
 }
 
 .lead {
-  max-width: 42rem;
-  margin: 1.25rem 0 2rem;
+  max-width: none;
+  margin: 0 0 1.25rem;
   color: #514942;
   font-size: clamp(1rem, 2vw, 1.24rem);
-  font-weight: 700;
+  font-weight: 600;
+  line-height: 1.85;
+  text-shadow: 0 1px 12px rgba(255, 253, 251, 0.95);
+}
+
+.hero-footer .lead {
+  white-space: nowrap;
 }
 
 .primary-link {
@@ -410,6 +437,21 @@ h2 {
   font-size: 0.96rem;
 }
 
+.profile-highlights {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 46rem;
+  margin: 0.55rem 0 0.7rem;
+  padding-left: 1.25rem;
+  color: var(--muted);
+  font-size: 0.96rem;
+  line-height: 1.75;
+}
+
+.profile-highlights li {
+  padding-left: 0.15rem;
+}
+
 .contact-section {
   margin-bottom: 4rem;
   padding: clamp(2rem, 5vw, 3.2rem);
@@ -549,12 +591,17 @@ h2 {
   }
 
   .hero {
-    min-height: calc(100svh - 6.5rem);
-    place-items: end start;
+    min-height: max(42rem, calc(100svh - 6.5rem));
+  }
+
+  .hero-bg {
+    object-position: center center;
   }
 
   .hero-overlay {
-    background: rgba(255, 253, 251, 0.76);
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255, 253, 251, 0.3) 0%, rgba(255, 253, 251, 0.12) 18%, transparent 36%),
+      linear-gradient(180deg, rgba(255, 253, 251, 0.9) 0%, rgba(255, 253, 251, 0.34) 27%, rgba(255, 253, 251, 0.05) 52%, rgba(255, 253, 251, 0.88) 82%, rgba(255, 253, 251, 0.96) 100%);
   }
 
   .hero-copy,
@@ -567,12 +614,31 @@ h2 {
   }
 
   .hero-copy {
-    padding: 0 0 3rem;
+    min-height: max(42rem, calc(100svh - 6.5rem));
+    padding: 1.4rem 0 1.6rem;
+  }
+
+  .hero-title,
+  .hero-footer {
+    max-width: 100%;
   }
 
   h1 {
-    max-width: none;
-    font-size: clamp(1.9rem, 9.5vw, 2.8rem);
+    max-width: 11.5em;
+    font-size: clamp(1.85rem, 8.6vw, 2.75rem);
+    line-height: 1.35;
+  }
+
+  .hero .eyebrow {
+    margin-bottom: 0.35rem;
+  }
+
+  .hero .lead {
+    max-width: 32rem;
+    margin-bottom: 1rem;
+    font-size: clamp(0.9rem, 4vw, 1rem);
+    line-height: 1.75;
+    white-space: normal;
   }
 
   h2 {
@@ -594,6 +660,12 @@ h2 {
 
   .profile-photo {
     width: min(62vw, 190px);
+  }
+
+  .profile-highlights {
+    gap: 0.45rem;
+    padding-left: 1.15rem;
+    font-size: 0.94rem;
   }
 
   .modal {
